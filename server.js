@@ -1,5 +1,5 @@
 const express = require('express')
-const mysql = require('mysql2')
+require('dotenv').config()
 
 const app = express()
 
@@ -15,15 +15,6 @@ app.use(express.urlencoded({
 
 // view engine
 app.set('view engine', 'ejs')
-
-// MySQL connection pool configuration
-mysql.createPool({
-    host:'127.0.0.1',
-    user:'root',
-    password:'admin',
-    database:'login_app_db'
-}).promise()
-
 
 const PORT = 8080
 app.listen(PORT, () => {

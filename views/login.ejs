@@ -4,8 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mysql Login App</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <p>login page</p>
+    <div class="container">
+        <h1>Login</h1>
+        <form id="loginForm">
+          <input type="text" id="username" placeholder="Username" required>
+          <input type="password" id="password" placeholder="Password" required>
+          <p id="errorText"></p>
+          <button type="submit">Login</button>
+        </form>
+      </div>
+    
+      <script src="js/sendAuthCredentials.js"></script>
 </body>
 </html>
