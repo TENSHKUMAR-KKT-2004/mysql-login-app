@@ -1,0 +1,87 @@
+.form-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f4f7f9;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .customer-form {
+    display: grid;
+    gap: 20px;
+  }
+  
+  .form-group {
+    display: grid;
+    gap: 10px;
+  }
+  
+  label {
+    font-weight: bold;
+    color: #555;
+  }
+  
+  input[type="text"] {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  input[type="number"]{
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  input[type="date"]{
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .submit-button {
+    padding: 10px 20px;
+    background-color: #ff5e3a;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-button:hover {
+    background-color: #ff3b20;
+  }
+  
+  #errorText {
+    color: #ff0000;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+#successText {
+    color: rgb(30, 209, 30);
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.logout-button {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  padding: 10px 20px;
+    background-color: rgb(0, 0, 255);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.logout-button:hover{
+  background-color: rgb(97, 97, 218);
+}

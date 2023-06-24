@@ -28,16 +28,16 @@ const authenticateUser = async (req, res) => {
         
         // incorrect credentials or user not found
         if (!user) {
-            return res.status(401).json({ error: 'Invalid username or password' });
+            return res.status(401).json({ error: 'Invalid username or password' }) 
         }
 
         // User found and authenticated
         if (user.username === 'admin') {// Admin login
-            req.session.user = { role: 'admin' };
-            return res.redirect('/admin');
+            req.session.user = { role: 'admin', username:'admin' } 
+            return res.redirect('/admin') 
         } else {// Customer login
-            req.session.user = { role: 'customer' };
-            return res.redirect('/customer');
+            req.session.user = { role: 'customer', username:user.username } 
+            return res.redirect('/customer') 
         }
     } catch (error) {
         console.error('Error authenticating user:', error)
@@ -54,5 +54,31 @@ const customerPanel = async (req,res)=>{
     res.render('customerPanel')
 }
 
+const addProductDetails = async (req, res) => {
+    const { orderDate, company, owner, item, quantity, weight, shipmentRequest, trackingID, shipmentSize, boxCount, specification, checklistQuantity } = req.body 
+    console.log(orderDate,company)
+    console.log(req.session.user.username)
+    try {
+        // Insert the product details into the 'customer_product_details' table
+        const query = `INSERT INTO customer_product_details (user, orderDate, company, owner, item, quantity, weight, shipmentRequest, trackingID, shipmentSize, boxCount, specification, checklistQuantity) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)` 
+        const values = [req.session.user.username, orderDate, company, owner, item, quantity, weight, shipmentRequest, trackingID, shipmentSize, boxCount, specification, checklistQuantity] 
+        await pool.query(query, values) 
 
-module.exports = { login_page, authenticateUser,adminPanel,customerPanel }
+        res.status(200).json({ message: 'Product details added successfully' }) 
+    } catch (error) {
+        console.error('Error adding product details:', error) 
+        res.status(500).json({ error: 'Internal server error' }) 
+    }
+} 
+
+const logout = async (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            console.log(err) 
+        }
+        res.redirect('/') 
+    }) 
+}
+
+
+module.exports = { login_page, authenticateUser,adminPanel,customerPanel,addProductDetails,logout }

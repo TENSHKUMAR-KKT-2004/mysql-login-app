@@ -1,11 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Customer Panel</title>
+    <link rel="stylesheet" href="css/customerPanel.css">
 </head>
+
 <body>
     <h1>Customer Panel</h1>
+    <div class="btn">
+        <form id="logoutForm" action="/logout" method="POST">
+            <button type="submit" class="logout-button">Logout</button>
+        </form>
+    </div>
+    <div class="form-container">
+        <h2>Add Customer Details</h2>
+        <form id="customerForm" class="customer-form">
+            <div class="form-group">
+                <label for="orderDate">Order Date</label>
+                <input type="date" id="orderDate" name="orderDate" required>
+            </div>
+            <div class="form-group">
+                <label for="company">Company</label>
+                <input type="text" id="company" name="company" pattern="[A-Za-z0-9]+" required>
+            </div>
+            <div class="form-group">
+                <label for="owner">Owner</label>
+                <input type="text" id="owner" name="owner" required>
+            </div>
+            <div class="form-group">
+                <label for="item">Item</label>
+                <input type="text" id="item" name="item" required>
+            </div>
+            <div class="form-group">
+                <label for="quantity">Quantity</label>
+                <input type="number" id="quantity" name="quantity" required>
+            </div>
+            <div class="form-group">
+                <label for="weight">Weight</label>
+                <input type="number" step="0.01" id="weight" name="weight" required>
+            </div>
+            <div class="form-group">
+                <label for="shipmentRequest">Shipment Request</label>
+                <input type="text" id="shipmentRequest" name="shipmentRequest" required>
+            </div>
+            <div class="form-group">
+                <label for="trackingID">Tracking ID</label>
+                <input type="text" id="trackingID" name="trackingID" required>
+            </div>
+            <div class="form-group">
+                <label for="shipmentSize">Shipment Size in (LxBxH)</label>
+                <input type="text" id="shipmentSize" name="shipmentSize" required>
+            </div>
+            <div class="form-group">
+                <label for="boxCount">Box Count</label>
+                <input type="number" id="boxCount" name="boxCount" required>
+            </div>
+            <div class="form-group">
+                <label for="specification">Specification</label>
+                <input type="text" id="specification" name="specification" required>
+            </div>
+            <div class="form-group">
+                <label for="checklistQuantity">Checklist Quantity</label>
+                <input type="text" id="checklistQuantity" name="checklistQuantity" required>
+            </div>
+            <p id="errorText"></p>
+            <p id="successText"></p>
+            <button type="submit" class="submit-button">Submit</button>
+        </form>
+    </div>
+    <script src="js/sendCustomerProductDetails.js"></script>
 </body>
+
 </html>
