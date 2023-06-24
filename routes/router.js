@@ -10,7 +10,6 @@ router.post('/auth/login',authenticateUser)
 
 router.get('/admin',requireAuth,adminPanel)
 
-
 router.get('/customer',requireAuth,customerPanel)
 router.post('/customer/product/details',requireAuth,addProductDetails)
 

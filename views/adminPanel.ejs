@@ -4,8 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel</title>
+    <link rel="stylesheet" href="css/adminPanel.css">
 </head>
 <body>
     <h1>Admin Panel</h1>
+    <div class="btn">
+        <form id="logoutForm" action="/logout" method="POST">
+            <button type="submit" class="logout-button">Logout</button>
+        </form>
+    </div>
+    <div class="table-container">
+        <h1 class="table-title">Customer Data Overview</h1>
+        <table>
+            <tr>
+                <th>Item/Customer</th>
+                <th>Customer1</th>
+                <th>Customer2</th>
+                <th>Total</th>
+            </tr>
+            <tr>
+                <td>Quantity</td>
+                <td><%= data.customer1.quantity %></td>
+                <td><%= data.customer2.quantity %></td>
+                <td><%= data.totalQuantity %></td>
+            </tr>
+            <tr>
+                <td>Weight</td>
+                <td><%= data.customer1.weight %></td>
+                <td><%= data.customer2.weight %></td>
+                <td><%= data.totalWeight %></td>
+            </tr>
+            <tr>
+                <td>Box Count</td>
+                <td><%= data.customer1.boxCount %></td>
+                <td><%= data.customer2.boxCount %></td>
+                <td><%= data.totalBoxCount %></td>
+            </tr>
+        </table>
+    </div>
 </body>
 </html>
