@@ -27,11 +27,10 @@ document.getElementById('loginForm').addEventListener('submit', async (event) =>
         });
 
         if (response.ok) {
-            const data = await response.json();
-            if (data.route === '/customer') {
-                location.assign('/customer');
+            if (response.redirected) {
+              window.location.href = response.url;
             } else {
-                location.assign('/admin');
+              console.log('Login successful');
             }
         } else {
             const errorResponse = await response.json();

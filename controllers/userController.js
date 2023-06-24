@@ -25,16 +25,19 @@ const authenticateUser = async (req, res) => {
         const user = allUsers.find(
             (user) => user.username === username && user.password === password
         )
+        
         // incorrect credentials or user not found
         if (!user) {
-            res.render('login', { error: 'Invalid username or password' })
+            return res.status(401).json({ error: 'Invalid username or password' });
         }
 
         // User found and authenticated
         if (user.username === 'admin') {// Admin login
-            res.status(200).json({ route: '/admin' });
+            req.session.user = { role: 'admin' };
+            return res.redirect('/admin');
         } else {// Customer login
-            res.status(200).json({ route: '/customer' });
+            req.session.user = { role: 'customer' };
+            return res.redirect('/customer');
         }
     } catch (error) {
         console.error('Error authenticating user:', error)
@@ -42,12 +45,13 @@ const authenticateUser = async (req, res) => {
     }
 }
 
+// Protected routes
 const adminPanel = async(req,res)=>{
-    res.send('admin panel')
+    res.render('adminPanel')
 }
 
 const customerPanel = async (req,res)=>{
-    res.send('customer panel')
+    res.render('customerPanel')
 }
 
 
