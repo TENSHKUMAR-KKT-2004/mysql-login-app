@@ -42,6 +42,29 @@ const authenticateUser = async (req, res) => {
   }
 } 
 
+const changePasswordPage = async(req,res)=>{
+  res.render('changePassword')
+}
+
+const changePassword = async(req,res)=>{
+  const { mobileNumber, newPassword } = req.body 
+
+  try {
+    const [users] = await pool.query('SELECT * FROM user WHERE phone = ?', [mobileNumber]) 
+    const user = users[0] 
+
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid mobile number' }) 
+    }
+
+    await pool.query('UPDATE user SET password = ? WHERE id = ?', [newPassword, user.id]) 
+    return res.status(200).json({ message: 'Password updated successfully' }) 
+  } catch (error) {
+    console.error('Error changing password:', error) 
+    res.status(500).json({ error: 'Internal server error' }) 
+  }
+} 
+
 // Protected routes
 
 const adminPanel = async (req, res) => {
@@ -119,4 +142,4 @@ const logout = async (req, res) => {
     })
 }
 
-module.exports = { login_page, authenticateUser, adminPanel, userPanel, addDetails, logout }
+module.exports = { login_page, authenticateUser,changePasswordPage,changePassword, adminPanel, userPanel, addDetails, logout }
