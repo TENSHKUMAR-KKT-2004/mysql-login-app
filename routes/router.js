@@ -8,19 +8,17 @@ router.get('/',login_page)
 
 router.post('/auth/login',authenticateUser)
 
-//
 router.get('/user-panel',requireAuth,userPanel)
 
 router.get('/change-password-page',changePasswordPage)
 
 router.post('/change-password',changePassword)
 
-//
 router.post('/product/add-details',requireAuth,addDetails)
 
-router.get('/product-details',orderList)
+router.get('/product-details',requireAuth,orderList)
 
-router.get('/export',exportFileFormat)
+router.get('/export',requireAuth,exportFileFormat)
 
 router.post('/logout',logout)
 
