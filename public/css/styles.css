@@ -32,13 +32,13 @@ input[type="password"] {
 button {
     display: block;
     width: 100%;
-    padding: 10px;
-    margin-top: 20px;
+    margin: 20px;
     background-color: #007bff;
     color: #fff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    padding: 2px;
 }
 
 button:hover {
@@ -57,3 +57,18 @@ input[type="password"].error {
     font-size: 14px;
     margin-top: 5px;
 }
+
+.buttonContainer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .leftButton {
+    order: 1;
+  }
+  
+  .rightButton {
+    order: 2;
+  }

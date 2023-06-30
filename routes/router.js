@@ -1,17 +1,22 @@
 const express = require('express')
 const router = express.Router()
 const { requireAuth } = require('../middleware/authMiddleware')
-const {login_page,authenticateUser,adminPanel,customerPanel,addProductDetails,logout} = require('../controllers/userController')
+const {login_page,authenticateUser,adminPanel,userPanel,addDetails,logout} = require('../controllers/userController')
 
 
 router.get('/',login_page)
 
 router.post('/auth/login',authenticateUser)
 
-router.get('/admin',requireAuth,adminPanel)
+router.get('/user-panel',requireAuth,userPanel)
 
-router.get('/customer',requireAuth,customerPanel)
-router.post('/customer/product/details',requireAuth,addProductDetails)
+router.get('/change-password',adminPanel)
+
+router.get('/product/add-details',requireAuth,addDetails)
+
+
+
+router.post('/product/details',requireAuth,adminPanel)
 
 router.post('/logout',logout)
 
