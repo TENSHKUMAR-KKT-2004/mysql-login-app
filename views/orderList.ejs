@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="css/orderList.css">
+</head>
+
+<body>
+    <h1>Order List Panel</h1>
+    <div class="btn">
+        <form id="logoutForm" action="/logout" method="POST">
+            <button type="submit" class="logout-button">Logout</button>
+        </form>
+    </div>
+    <div class="table-container">
+        <h1 class="table-title">Order List</h1>
+        <table>
+            <tr>
+                <th> </th>
+                <th>Order ID</th>
+                <th>Order Date</th>
+                <th>Item</th>
+                <th>Count</th>
+                <th>Weight</th>
+                <th>Requests</th>
+            </tr>
+            <tr>
+                <% for (let i = 0; i < orderList.length; i++) { %>
+                    <tr>
+                        <td><%= i%></td>
+                        <td><%= orderList[i].order_id %></td>
+                        <td><%= orderList[i].order_date %></td>
+                        <td><%= orderList[i].item %></td>
+                        <td><%= orderList[i].count %></td>
+                        <td><%= orderList[i].weight %></td>
+                        <td><%= orderList[i].requests %></td>
+                    </tr>
+                <% } %>
+            </tr>
+        </table>
+    </div>
+</body>
+
+</html>

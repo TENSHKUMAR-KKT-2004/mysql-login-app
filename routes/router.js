@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const { requireAuth } = require('../middleware/authMiddleware')
-const {login_page,authenticateUser,changePasswordPage,changePassword,adminPanel,userPanel,addDetails,logout} = require('../controllers/userController')
+const {login_page,authenticateUser,changePasswordPage,changePassword,orderList,userPanel,addDetails,logout} = require('../controllers/userController')
 
 
 router.get('/',login_page)
@@ -18,7 +18,7 @@ router.post('/change-password',changePassword)
 //
 router.post('/product/add-details',requireAuth,addDetails)
 
-router.get('/product/details',requireAuth,adminPanel)
+router.get('/product-details',orderList)
 
 router.post('/logout',logout)
 

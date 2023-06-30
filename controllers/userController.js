@@ -66,48 +66,15 @@ const changePassword = async (req, res) => {
 
 // Protected routes
 
-const adminPanel = async (req, res) => {
+const orderList = async (req, res) => {
+  // Process the data
   try {
-    // Process the data
-    const data = {
-      customer1: {
-        quantity: 0,
-        weight: 0,
-        boxCount: 0,
-      },
-      customer2: {
-        quantity: 0,
-        weight: 0,
-        boxCount: 0,
-      },
-      totalQuantity: 0,
-      totalWeight: 0,
-      totalBoxCount: 0,
-    }
+    const [orderList] = await pool.query('SELECT * FROM Orderitem')
 
-    const [results] = await pool.query('SELECT * FROM customer_product_details')
-
-    // Calculate the sums for each category
-    for (const result of results) {
-      if (result.user === 'customer1') {
-        data.customer1.quantity += result.quantity
-        data.customer1.weight += result.weight
-        data.customer1.boxCount += result.boxCount
-      } else if (result.user === 'customer2') {
-        data.customer2.quantity += result.quantity
-        data.customer2.weight += result.weight
-        data.customer2.boxCount += result.boxCount
-      }
-      data.totalQuantity += result.quantity
-      data.totalWeight += result.weight
-      data.totalBoxCount += result.boxCount
-    }
-
-    console.log(data)
-    res.render('adminPanel', { data })
+    res.render('orderList', { orderList }) 
   } catch (error) {
-    console.error('An error occurred while fetching data:', error)
-    res.status(500).json({ error: 'An error occurred while fetching data' })
+    console.error('Error fetching order data:', error) 
+    res.status(500).json({ error: 'Internal server error' }) 
   }
 }
 
@@ -119,8 +86,8 @@ const userPanel = async (req, res) => {
     const user = { id: userData[0].id, name: userData[0].username }
     res.render('addDetails', { user })
   } catch (error) {
-    console.error('Error retrieving user data:', error) 
-    res.status(500).json({ error: 'Internal server error' }) 
+    console.error('Error retrieving user data:', error)
+    res.status(500).json({ error: 'Internal server error' })
   }
 }
 
@@ -130,19 +97,19 @@ const addDetails = async (req, res) => {
     // Update OrderTable with the provided order details
     const orderItem = {
       order_id: Math.floor(Math.random() * 1000000) + 1,
-      order_date:orderDate,
+      order_date: orderDate,
       item,
       count,
       weight,
       requests
-    } 
+    }
 
-    await pool.query('INSERT INTO Orderitem SET ?', [orderItem]) 
+    await pool.query('INSERT INTO Orderitem SET ?', [orderItem])
 
-    res.status(200).json({ message: 'Order details added successfully' }) 
+    res.status(200).json({ message: 'Order details added successfully' })
   } catch (error) {
-    console.error('Error adding order details:', error) 
-    res.status(500).json({ error: 'Internal server error' }) 
+    console.error('Error adding order details:', error)
+    res.status(500).json({ error: 'Internal server error' })
   }
 }
 
@@ -155,4 +122,4 @@ const logout = async (req, res) => {
   })
 }
 
-module.exports = { login_page, authenticateUser, changePasswordPage, changePassword, adminPanel, userPanel, addDetails, logout }
+module.exports = { login_page, authenticateUser, changePasswordPage, changePassword, orderList, userPanel, addDetails, logout }
