@@ -1,4 +1,5 @@
 const mysql = require('mysql2')
+const xlsx = require('xlsx')
 
 // MySQL connection pool configuration
 const pool = mysql.createPool({
@@ -71,10 +72,10 @@ const orderList = async (req, res) => {
   try {
     const [orderList] = await pool.query('SELECT * FROM Orderitem')
 
-    res.render('orderList', { orderList }) 
+    res.render('orderList', { orderList })
   } catch (error) {
-    console.error('Error fetching order data:', error) 
-    res.status(500).json({ error: 'Internal server error' }) 
+    console.error('Error fetching order data:', error)
+    res.status(500).json({ error: 'Internal server error' })
   }
 }
 
@@ -113,6 +114,33 @@ const addDetails = async (req, res) => {
   }
 }
 
+const exportFileFormat = async (req, res) => {
+  try {
+    const [rows] = await pool.query('SELECT * FROM Orderitem')
+    const orderList = rows
+
+    // Create a new workbook and worksheet
+    const workbook = xlsx.utils.book_new()
+    const worksheet = xlsx.utils.json_to_sheet(orderList)
+
+    // Add the worksheet to the workbook
+    xlsx.utils.book_append_sheet(workbook, worksheet, 'Order Data')
+
+    // Generate the Excel file
+    const excelBuffer = xlsx.write(workbook, { type: 'buffer', bookType: 'xlsx' })
+
+    // Set the response headers for file download
+    res.set('Content-Disposition', 'attachment  filename="order_data.xlsx"')
+    res.set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+
+    // Send the Excel file as a response
+    res.send(excelBuffer)
+  } catch (error) {
+    console.error('Error exporting order data:', error)
+    res.status(500).json({ error: 'Internal server error' })
+  }
+}
+
 const logout = async (req, res) => {
   req.session.destroy((err) => {
     if (err) {
@@ -122,4 +150,4 @@ const logout = async (req, res) => {
   })
 }
 
-module.exports = { login_page, authenticateUser, changePasswordPage, changePassword, orderList, userPanel, addDetails, logout }
+module.exports = { login_page, authenticateUser, changePasswordPage, changePassword, orderList, userPanel, addDetails,exportFileFormat, logout }
